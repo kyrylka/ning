@@ -1,0 +1,230 @@
+function searchResults_v2(search_massive_str, condition, startP){
+  var mass = JSON.parse(search_massive_str);
+  var massInitLeng = mass.length;
+  var mass_str;
+  var stop;
+  var k=0;
+  var localRes = [];
+  if ((mass.length-startP)>100){
+    stop = startP + 100;
+    console.log('start='+startP);
+    console.log('stop='+stop);
+  } else {
+    stop = mass.length;
+    console.log('start='+startP);
+    console.log('stop='+stop);
+  }
+  loop1:
+  for(var i=0; i<condition.q2search.length; i++){
+    if(condition.q2search[i].result==="Not specified"){
+      if(i==(condition.q2search.length-1)){
+        if(typeof mass_str ==="undefined"){
+          if(localRes.length>0){
+            mass = localRes;
+            mass_str = JSON.stringify(mass);
+            return mass_str;
+          }else{
+            var checker = 0;
+            for(var loc_i=0; loc_i<condition.q2search.length; loc_i++){
+              if(condition.q2search[loc_i].result==="Not specified"){
+                checker = checker + 1;
+              }
+              if(loc_i==(condition.q2search.length-1)){
+                if(checker == condition.q2search.length){
+                  mass_str = "Empty search request";
+                  return mass_str;
+                }else{
+                  mass_str = "No results";
+                  console.log(mass_str);
+                  return mass_str;
+                }
+              }
+            }            
+          }                    
+        }else{
+          return mass_str;
+        }       
+      }else{
+        continue loop1;
+      }      
+    }else{
+      if(stop > mass.length){
+        stop=mass.length;
+        startP=0;
+      }else{
+        stop=stop;
+      }
+      loop2:
+      for(var j=startP; j<stop; j++){
+        loop3:
+        for(var q=0; q<mass[j].profileQuestions.length; q++){
+          if(mass[j].profileQuestions[q].questionId===condition.q2search[i].id){
+            if(mass[j].profileQuestions[q].answer.answer==condition.q2search[i].result){
+              if(j==(stop-1) && q==(mass[j].profileQuestions.length-1)){
+                localRes[k]=mass[j];
+                k=k+1;
+                mass=localRes;
+                localRes=[];
+                k=0;
+                if(i==(condition.q2search.length-1)){
+                  mass_str=JSON.stringify(mass);
+                  return mass_str;
+                }else{
+                  loop4:
+                  for(var f=(i+1);f<condition.q2search.length;f++){
+                    if(condition.q2search[f].result!="Not specified"){
+                      continue loop1;
+                    }else{
+                      if(f==(condition.q2search.length-1)){
+                        mass_str=JSON.stringify(mass);
+                        return mass_str;
+                      }else{
+                        continue loop4;
+                      }
+                    }
+                  }
+                }
+                //continue loop1; - по видимому лишнее
+              }else{
+                //ответ есть. но последний ли он возможный не ясно. значит просто вносим, проверку сделаем на
+                //на уровне не соответсвия ответа записаного в фактическом массиве и в запросе поиска
+                localRes[k]=mass[j];
+                k=k+1;                
+              }
+            }else{
+              // случай когда ответ записанный в массиве на поиск не соответсвует ответу в поисковом запросе 
+              if(j==(stop-1) && q==(mass[j].profileQuestions.length-1)){
+                if(localRes.length!=0){
+                  mass=localRes;
+                  localRes=[];
+                  k=0;
+                  loop5:
+                  for(var f=(i+1);f<condition.q2search.length;f++){
+                    if(condition.q2search[f].result!="Not specified"){
+                      continue loop1;
+                    }else{
+                      if(f==(condition.q2search.length-1)){
+                        mass_str=JSON.stringify(mass);
+                        return mass_str;
+                      }else{
+                        continue loop5;
+                      }
+                    }
+                  }
+                }else{
+                  // нужна проверка последняя ли итерация i кондишенов
+                  if(i==(condition.q2search.length-1) || i==0){
+                    mass_str = "No results";
+                    return mass_str;
+                  }
+                  loop6:
+                  for(var f=(i+1);f<condition.q2search.length;f++){
+                    if(condition.q2search[f].result!="Not specified" && mass.length==massInitLeng){
+                      continue loop1;
+                    }else{
+                      if(f==(condition.q2search.length-1)){
+                        
+                          mass_str = "No results";
+                          return mass_str;
+                                             
+                      }else{
+                        continue loop6;
+                      }
+                    }
+                  }                  
+                }
+              }else{
+                continue loop3;
+              }
+            }
+          }else{
+            if(j==(stop-1) && q==(mass[j].profileQuestions.length-1)){
+              if(localRes.length!=0){
+                mass=localRes;
+                localRes=[];
+                k=0;
+                loop7:
+                for(var f=(i+1);f<condition.q2search.length;f++){
+                  if(condition.q2search[f].result!="Not specified"){
+                    continue loop1;
+                  }else{
+                    if(f==(condition.q2search.length-1)){
+                      mass_str=JSON.stringify(mass);
+                      return mass_str;
+                    }else{
+                      continue loop7;
+                    }
+                  }
+                }
+              }else{
+                if(i==(condition.q2search.length-1) || i==0){
+                  mass_str = "No results";
+                  return mass_str;
+                }
+                loop8:
+                for(var f=(i+1);f<condition.q2search.length;f++){
+                  if(condition.q2search[f].result!="Not specified" && mass.length==massInitLeng){
+                    continue loop1;
+                  }else{
+                    if(f==(condition.q2search.length-1)){
+                      
+                        mass_str = "No results";
+                        return mass_str;
+                      
+                    }else{
+                      continue loop8;
+                    }
+                  }
+                }
+              }// here
+            }else{
+              continue loop3;
+            }
+          }
+        }
+        // тут нужна проверка на последнего мембера результаты локальные результаты и так далее
+        // только что добавил, может все сломать так что нужэна проверка
+        if(j==(stop-1) && q==(mass[j].profileQuestions.length)){
+              if(localRes.length!=0){
+                mass=localRes;
+                localRes=[];
+                k=0;
+                loop9:
+                for(var f=(i+1);f<condition.q2search.length;f++){
+                  if(condition.q2search[f].result!="Not specified"){
+                    continue loop1;
+                  }else{
+                    if(f==(condition.q2search.length-1)){
+                      mass_str=JSON.stringify(mass);
+                      return mass_str;
+                    }else{
+                      continue loop9;
+                    }
+                  }
+                }
+              }else{
+                if(i==(condition.q2search.length-1) || i==0){
+                  mass_str = "No results";
+                  return mass_str;
+                }
+                loop10:
+                for(var f=(i+1);f<condition.q2search.length;f++){
+                  if(condition.q2search[f].result!="Not specified" && mass.length==massInitLeng){
+                    continue loop1;
+                  }else{
+                    if(f==(condition.q2search.length-1)){
+                      
+                        mass_str = "No results";
+                        return mass_str;
+                      
+                    }else{
+                      continue loop10;
+                    }
+                  }
+                }
+              }
+        }// here
+      }
+    }
+  }
+}

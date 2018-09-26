@@ -1,15 +1,15 @@
 function deleteFieldSet(elem){
-  x$(elem).parent().remove();
+  $(elem).parent().remove();
 }
 
 function addFieldSet(elem) {
-  var type = x$(elem).parent();
+  var type = $(elem).parent();
   var limit = parseInt(type.attr('data-max'));
   console.log(limit);
   var name = type.attr('class');
   var clientLogoPlaceHolder = 'https://storage.ning.com/topology/rest/1.0/file/get/80427588?profile=original';
   var projectLogoPlaceHolder = 'https://storage.ning.com/topology/rest/1.0/file/get/80427588?profile=original';
-  if(x$(type).children('.preset').length>=limit){
+  if($(type).children('.preset').length>=limit){
     console.log("ERROR - limit of presets for " + type.attr('class'));    
   } else {
     var imgPlaceHolderUrl;
@@ -23,10 +23,10 @@ function addFieldSet(elem) {
 }
 
 function uploadPhoto(btn){ 
-  var batya = x$(btn).parent();
+  var batya = $(btn).parent();
   batya.children('input[name="logo"]').click();
   batya.children('input[name="logo"]').on('change', function() {
-    var batya = x$(this).parent();
+    var batya = $(this).parent();
     var file = batya.children('input[name="logo"]')[0].files[0];
     var url = window.URL.createObjectURL(file);
     batya.find('.imgContainer img').attr('src', url);
@@ -53,7 +53,7 @@ var promiseObj = new Promise(function (resolve, reject) {
       if (respons.status === 'ok' && respons.hasOwnProperty('location')===true){ 
         url = respons.location;
         console.log(respons.location);
-        x$.ajax({
+        $.ajax({
           url: url,
           type: 'POST',
           data: formData,
@@ -61,7 +61,7 @@ var promiseObj = new Promise(function (resolve, reject) {
           contentType: false,
           processData: false,
           xhr: function() {
-            var myXhr = x$.ajaxSettings.xhr();
+            var myXhr = $.ajaxSettings.xhr();
             if (myXhr.upload) {
               // For handling the progress of the upload
               myXhr.upload.addEventListener('progress', function(e) {
@@ -99,23 +99,23 @@ var promiseObj = new Promise(function (resolve, reject) {
 function getToSendData() {
   var promiseObj = new Promise(function (resolve, reject){
     var toSendDataJson = {};
-    for (var i=0; i<x$('.columnGroup>.form-field> input').length; i++){
-      var name  = x$(x$('.columnGroup>.form-field> input')[i]).attr('name');
-      toSendDataJson[name] = x$('.columnGroup input[name="'+name+'"]').val();
+    for (var i=0; i<$('.columnGroup>.form-field> input').length; i++){
+      var name  = $($('.columnGroup>.form-field> input')[i]).attr('name');
+      toSendDataJson[name] = $('.columnGroup input[name="'+name+'"]').val();
       console.log(toSendDataJson[name]);
     }
-    toSendDataJson["turnover"]=x$('select[name="turnover"]').val();
+    toSendDataJson["turnover"]=$('select[name="turnover"]').val();
     toSendDataJson["Client"] =[];
     toSendDataJson["Project"] =[];  
-    x$('fieldset').each(function(){
-      var type = x$(this).children("legend").text();
-      var logoUrl = x$(this).find('.imgContainer img').attr('src');
+    $('fieldset').each(function(){
+      var type = $(this).children("legend").text();
+      var logoUrl = $(this).find('.imgContainer img').attr('src');
       var file;
-      var itemName = x$(this).find('input[name="itemname"]').val();
+      var itemName = $(this).find('input[name="itemname"]').val();
       if(itemName===""){return;}
-      var descr = x$(this).find('textarea[name="description"]').val();
+      var descr = $(this).find('textarea[name="description"]').val();
       if (logoUrl.indexOf('blob')!=-1){
-        file = x$(this).find('input[name="logo"]')[0].files[0];  
+        file = $(this).find('input[name="logo"]')[0].files[0];  
         upload(file).then(function(ImgUrl){
           logoUrl = ImgUrl;
           toSendDataJson[type].push({'logoUrl':logoUrl,'itemName':itemName,'descr':descr});
@@ -150,26 +150,26 @@ function jsonToHtmlPreset(dataJson){
 /* html from text area to DataJson*/
 /* calibrated working fine */
 function htmlToJson(htmlText){
-  var html = x$.parseHTML(htmlText);
+  var html = $.parseHTML(htmlText);
   var dataJson ={};
-  for(var i=0; i<x$(html).find('.firstColumnItem').length; i++){
-    var name = x$(x$(html).find('.firstColumnItem')[i]).find('.firstColumnItemTitle p').text();
-    var text = x$(x$(html).find('.firstColumnItem')[i]).find('.firstColumnItmeText p').text();
+  for(var i=0; i<$(html).find('.firstColumnItem').length; i++){
+    var name = $($(html).find('.firstColumnItem')[i]).find('.firstColumnItemTitle p').text();
+    var text = $($(html).find('.firstColumnItem')[i]).find('.firstColumnItmeText p').text();
     name = nameConverter(name);
     dataJson[name] = text;
   }
   dataJson["Client"] =[];
   dataJson["Project"] =[];
-  for(var i=0;i<x$(html).find('.gridCompanyContainer').length; i++){
+  for(var i=0;i<$(html).find('.gridCompanyContainer').length; i++){
     var type ="Client";
     if(i===1){
       type="Project"
     }    
-    for(var j=0; j<x$(x$(html).find('.gridCompanyContainer')[i]).find('.gridCompanyElelment').length; j++){
-      var elemSelected = x$(x$(html).find('.gridCompanyContainer')[i]).find('.gridCompanyElelment')[j];
-      var logoUrl = x$(elemSelected).find('img').attr('src');
-      var itemName = x$(elemSelected).find('h3').text();
-      var descr = x$(elemSelected).find('p').text();
+    for(var j=0; j<$($(html).find('.gridCompanyContainer')[i]).find('.gridCompanyElelment').length; j++){
+      var elemSelected = $($(html).find('.gridCompanyContainer')[i]).find('.gridCompanyElelment')[j];
+      var logoUrl = $(elemSelected).find('img').attr('src');
+      var itemName = $(elemSelected).find('h3').text();
+      var descr = $(elemSelected).find('p').text();
       dataJson[type].push({'logoUrl':logoUrl,'itemName':itemName,'descr':descr}); 
     }
   }  
@@ -244,10 +244,12 @@ function nameConverter(txt) {
   }
   return name;
 }
+
 function firstStart(){
   x$(x$('.span8')[0]).append('<div class="columnGroup"><div class="form-field"><label for="number">Contact Number</label><input type="text"  class="input-full" name="number" value=""></div><div class="form-field"><label for="number">Company URL</label><input type="text"  class="input-full"  name="url" value=""></div><div class="form-field"><label for="turnover">Turn Over</label><select name="turnover"><option value="Identification">Less than 1</option><option value="Identification" selected>1 - 1.1</option><option value="Evaluation">1.1 - 1.2</option><option value="Ongoing">1.2 - 1.3</option><option value="Supervision">1.3 - 1.4</option><option value="Complited">More than 1.4</option></select></div><div class="form-field"><label for="turnover">Codes & Normes Certification</label><input type="text"  class="input-full"  name="codes" value=""></div><div class="form-field"><label for="turnover">Association membership</label><input type="text"  class="input-full"  name="assoc" value=""></div></div>');
       x$(x$('.row')[0]).append('<div class="span16"><div class="columnGroup"><h2>Client(s)</h2><div class="Client" data-max="6"><div class = "addFieldset icons" onclick="addFieldSet(this)">+</div><fieldset class="preset"><legend>Client</legend><div class="logoUploadContainer"><div class="imgContainer"><img src="https://storage.ning.com/topology/rest/1.0/file/get/124895260?profile=original"></div><p>Upload logo of client\'s company.</p><p>*180 px or bigger is recommended</p><p class="photoErr" style="color:red; visibility: hidden; font-size: 12px">Please choose some logo</p><input type="file" class="hidden" name="logo" accept=".jpg, .jpeg, .png"><div class="chooseFileBtn" onclick="uploadPhoto(this)">Choose File</div></div><div class="textBlock"><input type="text" name="itemname" val="" placeholder="Client name"><textarea rows="14" name="description" placeholder="Description"></textarea></div><div class="removeFieldSet icons" onclick="deleteFieldSet(this)">-</div></fieldset></div><h2>Project(s)</h2><div class="Project" data-max="6"><div class="addFieldset icons" onclick="addFieldSet(this)">+</div><fieldset class="preset"><legend>Project</legend><div class="logoUploadContainer"><div class="imgContainer"><img src="https://storage.ning.com/topology/rest/1.0/file/get/124895240?profile=original"></div><p>Upload project\'s logo</p><p>*180 px or bigger is recommended</p><p class="photoErr" style="color:red; visibility: hidden; font-size: 12px">Please choose some logo</p><input type="file" class="hidden" name="logo" accept=".jpg, .jpeg, .png"><div class="chooseFileBtn" onclick="uploadPhoto(this)">Choose File</div></div><div class="textBlock"><input type="text" name="itemname" val="" placeholder="Project name"><textarea rows="14" name="description" placeholder="Description"></textarea></div><div class="removeFieldSet icons" onclick="deleteFieldSet(this)">-</div></fieldset></div></div></div>');
 }
+
 function formSumbit(e){
   e.preventDefault();
   getToSendData().then(function(toSendDataJson){
@@ -256,4 +258,3 @@ function formSumbit(e){
     x$('#group-form').submit();
   });
 }
-

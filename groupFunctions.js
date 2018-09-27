@@ -39,7 +39,7 @@ function uploadPhoto(btn){
 
 function upload(file){ // should be checked on pre - live only
 var promiseObj = new Promise(function (resolve, reject) {
-  var url = 'https://storage.ning.com/topology/rest/1.0/file/upload/7050604' /*+ ning.CurrentApp.appId*/;
+  var url = 'https://upload.ning.com/topology/rest/1.0/file/upload/7050604' /*+ ning.CurrentApp.appId*/;
   var formData = new FormData();
   var request1 = new XMLHttpRequest();
   formData.append('file', file, file.name, file.type);  

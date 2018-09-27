@@ -131,7 +131,7 @@ function getToSendData() {
 /* converts dataJson into preset that would be shown on page in case */
 function jsonToHtmlPreset(dataJson){
   /* trun over pre selelec*/
-  var reply = '<div class="columnGroup"><div class="form-field"><label for="number">Contact Number</label><input type="text" class="input-full" name="number" value="'+dataJson.number+'"></div><div class="form-field"><label for="comanyUrl">Company URL</label><input type="text" class="input-full" name="url" value="'+dataJson.url+'"></div><div class="form-field"><label for="turnover">Turn Over</label><select name="turnover"><option value="Less than 1">Less than 1</option><option value="1 - 1.1">1 - 1.1</option><option value="1.1 - 1.2">1.1 - 1.2</option><option value="1.2 - 1.3">1.2 - 1.3</option><option value="1.3 - 1.4">1.3 - 1.4</option><option value="More than 1.4">More than 1.4</option></select></div><div class="form-field"><label for="turnover">Codes & Normes Certification</label><input class="input-full" type="text" name="codes" value="'+dataJson.codes+'"></div><div class="form-field"><label for="turnover">Association membership</label><input class="input-full" type="text" name="assoc" value="'+dataJson.assoc+'"></div></div><div class="columnGroup">';
+  var reply = '<div class="columnGroup"><div class="form-field"><label for="number">Contact Number</label><input type="text" class="input-full" name="number" value="'+dataJson.number+'"></div><div class="form-field"><label for="comanyUrl">Company URL</label><input type="text" class="input-full" name="url" value="'+dataJson.url+'"></div><div class="form-field"><label for="turnover">Turn Over</label><select name="turnover"><option value="Less than 1">Less than 1</option><option value="1 - 1.1">1 - 1.1</option><option value="1.1 - 1.2">1.1 - 1.2</option><option value="1.2 - 1.3">1.2 - 1.3</option><option value="1.3 - 1.4">1.3 - 1.4</option><option value="More than 1.4">More than 1.4</option></select></div><div class="form-field"><label for="turnover">Codes & Normes Certification</label><input class="input-full" type="text" name="codes" value="'+dataJson.codes+'"></div><div class="form-field"><label for="turnover">Association membership</label><input class="input-full" type="text" name="assoc" value="'+dataJson.assoc+'"></div><div class="form-field location"><label for="location">Country</label><input class="input-full" type="text" name="country" value="'+dataJson.country+'"></div><div class="form-field location"><label for="location">City</label><input class="input-full" type="text" name="city" value="'+dataJson.city+'"></div><div class="form-field location"><label for="location">Post Code</label><input class="input-full" type="text" name="postcode" value="'+dataJson.postcode+'"></div></div><div class="columnGroup">';
   if(reply.indexOf(dataJson.turnover) > -1){
     var text = reply.split('value="'+dataJson.turnover+'"');
     text[0] += 'value="'+dataJson.turnover+'" selected';
@@ -201,7 +201,11 @@ function jsonToHtml(dataJson) {
       }
       htmlText_secondColumn+=entry;
     }else{
-      htmlText_firstColumn+='<div class="firstColumnItem"><div class="firstColumnItemTitle"><p>' + nameConverter(keys[i]) + '</p></div><div class="firstColumnItmeText"><p>' + dataJson[keys[i]] + '</p></div></div>';      
+      var locaClass="";
+      if(keys[i]==="country" || keys[i]==="city" || keys[i]==="postcode") {
+        locaClass=keys[i];
+      }
+      htmlText_firstColumn+='<div class="firstColumnItem '+locaClass+'"><div class="firstColumnItemTitle"><p>' + nameConverter(keys[i]) + '</p></div><div class="firstColumnItmeText"><p>' + dataJson[keys[i]] + '</p></div></div>';      
     }
   }
   /*end of function here*/
@@ -242,6 +246,24 @@ function nameConverter(txt) {
     case "number": 
       name = "Contact Number";
       break;
+    case "country": 
+      name = "Country";
+      break;
+    case "city": 
+      name = "City";
+      break;
+    case "postcode": 
+      name = "Post Code";
+      break;
+    case "Post Code": 
+      name = "postcode";
+      break;
+    case "City": 
+      name = "city";
+      break;
+    case "Country": 
+      name = "country";
+      break;
     default:
       name = "Undefined"
       break;
@@ -250,6 +272,6 @@ function nameConverter(txt) {
 }
 
 function firstStart(){
-  x$(x$('.span8')[0]).append('<div class="columnGroup"><div class="form-field"><label for="number">Contact Number</label><input type="text"  class="input-full" name="number" value=""></div><div class="form-field"><label for="number">Company URL</label><input type="text"  class="input-full"  name="url" value=""></div><div class="form-field"><label for="turnover">Turn Over</label><select name="turnover"><option value="Less than 1">Less than 1</option><option value="1 - 1.1" selected>1 - 1.1</option><option value="1.1 - 1.2">1.1 - 1.2</option><option value="1.2 - 1.3">1.2 - 1.3</option><option value="1.3 - 1.4">1.3 - 1.4</option><option value="More than 1.4">More than 1.4</option></select></div><div class="form-field"><label for="turnover">Codes & Normes Certification</label><input type="text"  class="input-full"  name="codes" value=""></div><div class="form-field"><label for="turnover">Association membership</label><input type="text"  class="input-full"  name="assoc" value=""></div></div>');
+  x$(x$('.span8')[0]).append('<div class="columnGroup"><div class="form-field"><label for="number">Contact Number</label><input type="text"  class="input-full" name="number" value=""></div><div class="form-field"><label for="number">Company URL</label><input type="text"  class="input-full"  name="url" value=""></div><div class="form-field"><label for="turnover">Turn Over</label><select name="turnover"><option value="Less than 1">Less than 1</option><option value="1 - 1.1" selected>1 - 1.1</option><option value="1.1 - 1.2">1.1 - 1.2</option><option value="1.2 - 1.3">1.2 - 1.3</option><option value="1.3 - 1.4">1.3 - 1.4</option><option value="More than 1.4">More than 1.4</option></select></div><div class="form-field"><label for="turnover">Codes & Normes Certification</label><input type="text"  class="input-full"  name="codes" value=""></div><div class="form-field"><label for="turnover">Association membership</label><input type="text"  class="input-full"  name="assoc" value=""></div><div class="form-field location"><label for="location">Country</label><input class="input-full" type="text" name="country" value="'+dataJson.country+'"></div><div class="form-field location"><label for="location">City</label><input class="input-full" type="text" name="city" value="'+dataJson.city+'"></div><div class="form-field location"><label for="location">Post Code</label><input class="input-full" type="text" name="postcode" value="'+dataJson.postcode+'"></div></div>');
   x$(x$('.row')[0]).append('<div class="span16"><div class="columnGroup"><h2>Client(s)</h2><div class="Client" data-max="6"><div class = "addFieldset icons" onclick="addFieldSet(this)">+</div><fieldset class="preset"><legend>Client</legend><div class="logoUploadContainer"><div class="imgContainer"><img src="https://storage.ning.com/topology/rest/1.0/file/get/124895260?profile=original"></div><p>Upload logo of client\'s company.</p><p>*180 px or bigger is recommended</p><p class="photoErr" style="color:red; visibility: hidden; font-size: 12px">Please choose some logo</p><input type="file" class="hidden" name="logo" accept=".jpg, .jpeg, .png"><div class="chooseFileBtn" onclick="uploadPhoto(this)">Choose File</div></div><div class="textBlock"><input type="text" name="itemname" val="" placeholder="Client name"><textarea rows="14" name="descr" placeholder="Description"></textarea></div><div class="removeFieldSet icons" onclick="deleteFieldSet(this)">-</div></fieldset></div><h2>Project(s)</h2><div class="Project" data-max="6"><div class="addFieldset icons" onclick="addFieldSet(this)">+</div><fieldset class="preset"><legend>Project</legend><div class="logoUploadContainer"><div class="imgContainer"><img src="https://storage.ning.com/topology/rest/1.0/file/get/124895240?profile=original"></div><p>Upload project\'s logo</p><p>*180 px or bigger is recommended</p><p class="photoErr" style="color:red; visibility: hidden; font-size: 12px">Please choose some logo</p><input type="file" class="hidden" name="logo" accept=".jpg, .jpeg, .png"><div class="chooseFileBtn" onclick="uploadPhoto(this)">Choose File</div></div><div class="textBlock"><input type="text" name="itemname" val="" placeholder="Project name"><textarea rows="14" name="descr" placeholder="Description"></textarea></div><div class="removeFieldSet icons" onclick="deleteFieldSet(this)">-</div></fieldset></div></div></div>');
 }

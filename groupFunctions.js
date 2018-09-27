@@ -108,7 +108,7 @@ function getToSendData() {
     toSendDataJson["Client"] =[];
     toSendDataJson["Project"] =[];  
     x$('fieldset').each(function(){
-      var type = x$(this).children("legend").text();
+      var type = x$(this).parent().attr('class');
       var logoUrl = x$(this).find('.imgContainer img').attr('src');
       var file;
       var itemName = x$(this).find('input[name="itemname"]').val();

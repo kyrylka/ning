@@ -32,6 +32,7 @@ function uploadPhoto(btn){
     batya.find('.imgContainer img').attr('src', url);
     batya.children('p.photoErr').attr('style','color:red; visibility: hidden; font-size: 12px');
     upload(file).then(function(ImgUrl){
+      ImgUrl = "https://storage.ning.com/topology/rest/1.0/file/get/"+ImgUrl.id+"?profile=original";
       batya.find('.imgContainer img').attr('src', ImgUrl);
     });
   });

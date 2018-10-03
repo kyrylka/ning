@@ -1,0 +1,240 @@
+var blackListInit =['Company description','Country','Contact email','Telephone', 'Website', 'Company address','Academia','Market Access','Advisory services','Producer', 'Contract Research Organisation','Contract Service Organisation','Contract Manufacturing Organisation','Advisory Services'];
+var dependenciesInit = {"q12":{"Pharmaceutical company":{"qN":[]},
+                               "CSO":{"q18":["Airfreight", "Analytical services", "Artwork", "Chemistry", "Cold Chain transportation", "Customs Clearance", "Cold Chain warehousing", "Controlled substances", "Diagnostics", "Formulation development", "Logistics Service Provider", "Method development", "Roadfreight", "Medical devices", "Pharmacovigilance", "Pre-wholesaling", "RP services", "QA services", "QC services", "QP services", "Railfrieght", "Regulatory", "Serialization", "Stability", "Transportation", "Validation", "Warehousing"]},
+                               "CRO":{"q19":["Biopharmaceutical", "Bioprocess technology", "Clinical supply", "Clinical supply returns", "Clinical Trial", "Comparator sourcing", "Clinical trial packaging and labelling", "Computer software", "Molecular biology", "Research and Development", "Storage"]},
+                               "CMO":{"q17":["Analytical services", "Biomanufacturing", "Intermediate & API", "Drug Product", "QP services", "Packaging", "Commercial manufacturing", "Clinical manufacturing", "Pharmaceutical development", "Containment manufacturing", "GMP Laboratories", "Stability", "Serialization", "Anti-counterfeiting", "Medical device manufacture", "Diagnostics", "Ampule fill", "Aseptics", "Blending", "Blistering", "Bromination", "Chloromethylation", "Clousres", "Chlorination", "Creams", "Crystalization", "Cyanation", "Drops", "Encapsulation", "Fermentation", "Friedel Craft", "Granulation", "Hydrogenation", "Lotions", "Lyopholization", "Micronisation", "Ointments", "Parenterals", "Patches", "Powders", "Purification", "Solid dosage form", "Tablets", "Reduction", "Sprays", "Sub-cutaneous", "Suppositories", "Syringes", "Vial fill"]},
+                               "Producer":{"q22":["Alkaloids", "Amino Acids", "Antioxidants", "Bags and tubes", "Binders", "Bio-catalysts", "Catalysts", "Cellulose", "Chirals", "Cosmesceuticals", "Dyes", "Enzymes", "Finished product Generic", "Food Supplements", "Excipients", "GMP API", "GMP biologics", "GMP intermediates", "Hormones", "Highly potent molecules", "Injectibles", "Lab equipement", "Lactose", "Lignosulphonates", "Lubricants", "Machinery", "Neutraceuticals", "Peptides", "Phospholides", "Pigments", "Plastics", "Probiotics", "Raw materials", "Sachet", "Solvents", "Stabilising agents", "Surfactants", "Vitamins"]},
+                               "Advisory services":{"q29":["Analytical", "API development", "Bio-manufacturing", "Controlled substances", "Counterfeiting", "Diagnostics", "Formulation development", "GCP", "GDP", "GMP", "GLP", "Manufacturing", "Medical devices", "Pack development", "Packaging", "Pharmacovigilance", "Quality", "Regulatory", "Transportation"]},
+                               "Market Access":{"q24":["Brand and Insight", "Consumer Health", "Patient Associations", "Public Health and Government", "Policy", "Real-World Value"]},
+                               "Academia":{"q32":["University Services", "Research", "Thought Leader"]}
+                              }
+                       };
+var questionGlobalList=[];
+var cons_key = '6cb8b57a-0a7e-4281-9e9d-61ba2165f95e';
+var token = 'c7f8bac5-0890-4094-8efe-348e54efffdd';
+var signature = 'f1eb072e-8359-4ce7-9b02-31f4370d3dd6%2615b6906f-488b-42bd-8f6d-50530030d1bf';
+//document.addEventListener("DOMContantLoaded", getProfileQuestions()); - deprecated
+/*replaces loader with search form*/
+function getProfileQuestions(blackList, dependencies){
+  var catRequest = new XMLHttpRequest();
+  catRequest.open("GET","https://external.ningapis.com/xn/rest/adlogens/2.0/Network?xn_pretty=true&ID=7056184&fields=profileQuestions");
+  catRequest.setRequestHeader('Authorization','OAuth oauth_signature_method="PLAINTEXT",oauth_consumer_key="'+cons_key+'",oauth_token="'+token+'",oauth_signature="'+signature+'"');
+  catRequest.send();
+  catRequest.onreadystatechange = function(){
+    if(catRequest.readyState === 4 && catRequest.status === 200){
+      var questionsListFull = JSON.parse(catRequest.responseText);
+      questionsListFull = questionsListFull.entry[0].profileQuestions;
+      questionGlobalList = questionsListFull;
+      var formToPost="";
+      var questionList=[];      
+      // accepts JSON related to one question
+      // output should have html code to be inserted
+      
+      if(typeof blackList === "undefined"){
+        questionList=questionsListFull;
+      }else{
+        for(var i=0; i<questionsListFull.length; i++){
+          if(blackList.indexOf(questionsListFull[i].title)===(-1)){
+            questionList.push(questionsListFull[i]);            
+          }
+        }
+      }      
+      for(var i=0; i<questionList.length;i++){
+        formToPost+='<div class="advancedSearchQuestion">';        
+        if(typeof dependencies!="undefined" && dependencies.hasOwnProperty("q"+questionList[i].index)===true){
+          formToPost+= '<div class="questionAndDependency">'+questionToHtml(questionList[i], dependencies) +'<div class="dependecyContainer"></div></div></div>';
+        }else{
+          formToPost+= questionToHtml(questionList[i], dependencies) + '</div>';
+        }
+      }
+      formToPost = '<div class="advancedSearchContainer"><div class="questionsPull">'+formToPost+'<div id="searchButton" style="" onclick="searchOnClick()">Search</div><div id="searchResults">&nbsp;</div></div></div>';
+      if(typeof $==="undefined"){
+        document.addEventListener("DOMContentLoaded", function(){
+          $(".advancedLoader").replaceWith(formToPost);
+        });
+      }else{
+        $(".advancedLoader").replaceWith(formToPost);
+      }
+    }
+  }
+}
+function questionToHtml(question, dependencies){
+  var helpText="Strict Mode - if activated, would force the search to return member's profiles which has picked up all the choises ticked by you in search preferences. If deactivated, if at least one of the choices under the profile satisfis your search request, you will see in the results. Note: Each question with multiple answers has separated trigger";
+        var resultHtml;
+        if(question.type==="text" || question.type==="url"){
+          resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><input class="advancedSeacrhInput" value="" id="q'+question.index+'" type="text"></input>';
+        }else if(question.type==="textarea"){
+          resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><textarea class="advancedSeacrhTextarea" value="" id="q'+question.index+'" rows="3"></textarea>';
+        }else if(question.type==="select"){          
+          var ifInDependecies ="";
+          var idQ = 'q'+question.index;
+          if(typeof dependencies!="undefined" && dependencies.hasOwnProperty(idQ)===true){
+            resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><select class="advansedSearchSelect" id="q'+question.index+'" onchange="setChoicesForCategory(this)"><option selected="selected" value="Not specified">-</option>';
+            for(var j=0; j<question.choices.length; j++){
+              resultHtml+='<option value="'+question.choices[j]+'">'+question.choices[j]+'</option>';
+            }
+            resultHtml+='</select>';
+          }else{
+            resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><div class="multyReply">';
+            for(var j=0; j<question.choices.length; j++){
+              resultHtml+='<div class="elemOfMultyContainer"><input type="checkbox" id="q'+question.index+'c'+j+'" '+ifInDependecies+'></input><label for="q'+question.index+'c'+j+'">'+question.choices[j]+'</label></div>';
+            }
+            resultHtml+= "</div>";
+          }
+          if(question.multiple === true){
+            resultHtml+='<div class="strictTriger" onclick="strictTriger(this)">&nbsp;</div><input type="hidden" value="true"></input><div class="multyHelp"><div onmouseover="showHelpMsg(this)" onmouseout="hideHelpMsg(this)">?</div><div class="multyHelpInfo" style="display:none">'+helpText+'</div></div>';
+          }
+        }else{
+          resultHtml = '<p>Question "'+question.title+'" with id=id"'+question.index+'" is in unsupporte type< please modify your blackList JSON. Or modify "questionToHtml" function appropriately. Regularly this message shouln\'t be shown</p>';
+        }        
+        return resultHtml;
+      }
+/* simply converts "true" into true and "false" into false, other text would stay unchanged  */
+function textToBool(str){
+  if(str==="true"){
+    str=true;
+  }else if(str==="false"){
+    str=false;
+  }else{
+    str=str;
+  }
+  return str;
+}
+/* activates the strictc mode */
+function strictTriger(elem){
+  elem=$(elem);
+  var inptVal = elem.parent().children('input[type="hidden"]').val();
+  if(inptVal === "true"){
+    elem.parent().children('input[type="hidden"]').val("false");
+    elem.addClass("triggered");
+  }else{
+    elem.parent().children('input[type="hidden"]').val("true");
+    elem.removeClass("triggered");
+  }
+}
+/* these two functions hide and unhide help message near ? sign */
+function showHelpMsg(elem){
+  elem=$(elem);
+  elem.parent().children('.multyHelpInfo').fadeIn(300);
+}
+function hideHelpMsg(elem){
+  elem=$(elem);
+  elem.parent().children('.multyHelpInfo').fadeOut(300);
+}
+/* Adds dependencies depends on the input changes 
+   elem here is the check box in the pull*/
+function setChoicesForCategory(elem) {
+  /*lets first of all get as much usefull info as possible*/  
+  var questionId = $(elem).attr('id'); 
+  // check if in dependecies
+  var pickedCategory = $(elem).val();
+  var dependecyContainer = $(elem).parent().find(".dependecyContainer");
+  if(dependecyContainer.children().length!=0){
+      dependecyContainer.children().remove();
+    } 
+  if(dependenciesInit.hasOwnProperty(questionId)===true){
+    var idsToPost = Object.keys(dependenciesInit[questionId][pickedCategory]);    
+    for(var i=0; i<idsToPost.length; i++){
+      for(var j=0; j<questionGlobalList.length; j++){
+        if(questionGlobalList[j].index==idsToPost[i].slice(1)){
+          var reply = questionToHtml(questionGlobalList[j], dependenciesInit);          
+          dependecyContainer.append(reply);
+        }        
+      } 
+    }    
+  }
+}
+
+// search_conditions = {'q2search':[{'id':'q12','result':q12},{'id':'q27','result':q27},{'id':'q16','result':q16}],'location':'zip'};
+function searchOnClick(){
+  if(window.myInterval!=undefined&&window.myInterval!='undefined'){
+    window.clearInterval(window.myInterval);
+  }
+  if($('#searchResults').children().length!=0){
+    $('#searchResults').children().remove();
+  }
+  results=null;
+  //loaderActions('add'); - temporary
+  search_conditions={};
+  var q2searchArray=[];
+  for(var i=0;i<$('.advancedSearchQuestion').length; i++){    
+    var elem = $($('.advancedSearchQuestion')[i]);
+    if(elem.find('.questionAndDependency').length!=0){
+      console.log("cat search triggered");
+      var elemId = elem.find('select').attr('id');
+      q2searchArray.push({ 'id':elemId, 'result': elem.find('select').val(), 'multy':"what_ever"});
+      if(elem.find('input[type="checkbox"]').length!=0){
+        var dependencyArray=[];
+        for(var j=0; j<elem.find('input[type="checkbox"]').length; j++){
+          var checkBox = $(elem.find('input[type="checkbox"]')[j]);
+          if(checkBox[0].checked===true){
+            var boxId=checkBox.attr('id');
+            dependencyArray.push(elem.find('label[for="'+boxId+'"]').text());
+          }
+        }
+        var multyLoc = textToBool(elem.find('input[type="hidden"]').val());
+        if(dependencyArray.length===0){
+          dependencyArray="Not specified";
+          multyLoc = "what_ever";
+        }
+        q2searchArray.push({'id': elem.find('.dependecyContainer > label').attr("for"), 'result':dependencyArray, 'multy': multyLoc});
+      }
+    }else{
+      if(elem.find('input[type="text"]').length!=0){
+        console.log("text input search triggered");
+        var res = elem.find('input[type="text"]').val();
+        if(res===""){
+          res="Not specified";
+        }
+        q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": "what_ever"});
+      /*}else if(elem.find('select.advansedSearchSelect')){
+        console.log("select input search triggered");
+        console.log(elem[0]);
+        q2searchArray.push({'id':elem.find('select').attr('id'), 'result': elem.find('select').val(), "multy": "what_ever"});*/
+      }else if(elem.children('.multyReply').length!=0){
+        console.log("multy search triggered");
+        console.log("problem place");
+        var depArray=[];
+        for(var l=0; l<elem.find('input[type="checkbox"]').length; l++){
+          var checkBox = $(elem.find('input[type="checkbox"]')[l]);
+          if(checkBox[0].checked===true){
+            var boxId=checkBox.attr('id');
+            depArray.push(elem.find('label[for="'+boxId+'"]').text());
+          }
+        }               
+        var multy = true;
+        if(depArray.length===0){
+          depArray="Not specified";
+          multy = "what_ever";
+        }
+        q2searchArray.push({'id': elem.children('label').attr("for"), 'result':depArray, 'multy': multy});
+      }else if(elem.find('textarea').length!=0){
+        console.log("textarea input search triggered");
+        var res = elem.find('textarea').val();
+        if(res===""){
+          res="Not specified";
+        }
+        q2searchArray.push({'id':elem.find('textarea').attr('id'), 'result': res, "multy": "what_ever"});
+      }else{
+        console.log("Oops. Something went wrong");
+      }      
+    }
+  }
+  search_conditions = {'q2search':q2searchArray,'location':'zip'};
+  resPP_end=0;
+  var checker=0;
+  for(var loc_i=0; loc_i<search_conditions.q2search.length; loc_i++){
+    if(search_conditions.q2search[loc_i].result==="Not specified"){
+      checker = checker + 1;
+    }
+    if(loc_i==(search_conditions.q2search.length-1)){
+      if(checker == search_conditions.q2search.length){
+        errorMessage('Please choose some search criterias');
+      }else{
+        addResultsToResults();
+        resPP_end=resPP_end + resPP;        
+        addResultsToFront();
+      }
+    }
+  } 
+}

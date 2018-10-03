@@ -48,12 +48,12 @@ function getProfileQuestions(blackList, dependencies){
         }
       }
       formToPost = '<div class="advancedSearchContainer"><div class="questionsPull">'+formToPost+'<div id="searchButton" style="" onclick="searchOnClick()">Search</div><div id="searchResults">&nbsp;</div></div></div>';
-      if(typeof $==="undefined"){
+      if(typeof x$==="undefined"){
         document.addEventListener("DOMContentLoaded", function(){
-          $(".advancedLoader").replaceWith(formToPost);
+          x$(".advancedLoader").replaceWith(formToPost);
         });
       }else{
-        $(".advancedLoader").replaceWith(formToPost);
+        x$(".advancedLoader").replaceWith(formToPost);
       }
     }
   }
@@ -102,7 +102,7 @@ function textToBool(str){
 }
 /* activates the strictc mode */
 function strictTriger(elem){
-  elem=$(elem);
+  elem=x$(elem);
   var inptVal = elem.parent().children('input[type="hidden"]').val();
   if(inptVal === "true"){
     elem.parent().children('input[type="hidden"]').val("false");
@@ -114,21 +114,22 @@ function strictTriger(elem){
 }
 /* these two functions hide and unhide help message near ? sign */
 function showHelpMsg(elem){
-  elem=$(elem);
+  elem=x$(elem);
   elem.parent().children('.multyHelpInfo').fadeIn(300);
 }
 function hideHelpMsg(elem){
-  elem=$(elem);
+  elem=x$(elem);
   elem.parent().children('.multyHelpInfo').fadeOut(300);
 }
 /* Adds dependencies depends on the input changes 
    elem here is the check box in the pull*/
 function setChoicesForCategory(elem) {
   /*lets first of all get as much usefull info as possible*/  
-  var questionId = $(elem).attr('id'); 
+  var questionId = x$(elem).attr('id');
+ 
   // check if in dependecies
-  var pickedCategory = $(elem).val();
-  var dependecyContainer = $(elem).parent().find(".dependecyContainer");
+  var pickedCategory = x$(elem).val();
+  var dependecyContainer = x$(elem).parent().find(".dependecyContainer");
   if(dependecyContainer.children().length!=0){
       dependecyContainer.children().remove();
     } 
@@ -150,15 +151,15 @@ function searchOnClick(){
   if(window.myInterval!=undefined&&window.myInterval!='undefined'){
     window.clearInterval(window.myInterval);
   }
-  if($('#searchResults').children().length!=0){
-    $('#searchResults').children().remove();
+  if(x$('#searchResults').children().length!=0){
+    x$('#searchResults').children().remove();
   }
   results=null;
   //loaderActions('add'); - temporary
   search_conditions={};
   var q2searchArray=[];
-  for(var i=0;i<$('.advancedSearchQuestion').length; i++){    
-    var elem = $($('.advancedSearchQuestion')[i]);
+  for(var i=0;i<x$('.advancedSearchQuestion').length; i++){    
+    var elem = x$(x$('.advancedSearchQuestion')[i]);
     if(elem.find('.questionAndDependency').length!=0){
       console.log("cat search triggered");
       var elemId = elem.find('select').attr('id');
@@ -166,7 +167,7 @@ function searchOnClick(){
       if(elem.find('input[type="checkbox"]').length!=0){
         var dependencyArray=[];
         for(var j=0; j<elem.find('input[type="checkbox"]').length; j++){
-          var checkBox = $(elem.find('input[type="checkbox"]')[j]);
+          var checkBox = x$(elem.find('input[type="checkbox"]')[j]);
           if(checkBox[0].checked===true){
             var boxId=checkBox.attr('id');
             dependencyArray.push(elem.find('label[for="'+boxId+'"]').text());
@@ -196,7 +197,7 @@ function searchOnClick(){
         console.log("problem place");
         var depArray=[];
         for(var l=0; l<elem.find('input[type="checkbox"]').length; l++){
-          var checkBox = $(elem.find('input[type="checkbox"]')[l]);
+          var checkBox = x$(elem.find('input[type="checkbox"]')[l]);
           if(checkBox[0].checked===true){
             var boxId=checkBox.attr('id');
             depArray.push(elem.find('label[for="'+boxId+'"]').text());

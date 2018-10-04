@@ -1,8 +1,4 @@
 var questionGlobalList=[];
-var cons_key = '6cb8b57a-0a7e-4281-9e9d-61ba2165f95e';
-var token = 'c7f8bac5-0890-4094-8efe-348e54efffdd';
-var signature = 'f1eb072e-8359-4ce7-9b02-31f4370d3dd6%2615b6906f-488b-42bd-8f6d-50530030d1bf';
-//document.addEventListener("DOMContantLoaded", getProfileQuestions()); - deprecated
 /*replaces loader with search form*/
 function getProfileQuestions(blackList, dependencies){
   var catRequest = new XMLHttpRequest();

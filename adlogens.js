@@ -1,14 +1,3 @@
-var blackListInit =['Company description','Country','Contact email','Telephone', 'Website', 'Company address','Academia','Market Access','Advisory services','Producer', 'Contract Research Organisation','Contract Service Organisation','Contract Manufacturing Organisation','Advisory Services'];
-var dependenciesInit = {"q12":{"Pharmaceutical company":{"qN":[]},
-                               "CSO":{"q18":["Airfreight", "Analytical services", "Artwork", "Chemistry", "Cold Chain transportation", "Customs Clearance", "Cold Chain warehousing", "Controlled substances", "Diagnostics", "Formulation development", "Logistics Service Provider", "Method development", "Roadfreight", "Medical devices", "Pharmacovigilance", "Pre-wholesaling", "RP services", "QA services", "QC services", "QP services", "Railfrieght", "Regulatory", "Serialization", "Stability", "Transportation", "Validation", "Warehousing"]},
-                               "CRO":{"q19":["Biopharmaceutical", "Bioprocess technology", "Clinical supply", "Clinical supply returns", "Clinical Trial", "Comparator sourcing", "Clinical trial packaging and labelling", "Computer software", "Molecular biology", "Research and Development", "Storage"]},
-                               "CMO":{"q17":["Analytical services", "Biomanufacturing", "Intermediate & API", "Drug Product", "QP services", "Packaging", "Commercial manufacturing", "Clinical manufacturing", "Pharmaceutical development", "Containment manufacturing", "GMP Laboratories", "Stability", "Serialization", "Anti-counterfeiting", "Medical device manufacture", "Diagnostics", "Ampule fill", "Aseptics", "Blending", "Blistering", "Bromination", "Chloromethylation", "Clousres", "Chlorination", "Creams", "Crystalization", "Cyanation", "Drops", "Encapsulation", "Fermentation", "Friedel Craft", "Granulation", "Hydrogenation", "Lotions", "Lyopholization", "Micronisation", "Ointments", "Parenterals", "Patches", "Powders", "Purification", "Solid dosage form", "Tablets", "Reduction", "Sprays", "Sub-cutaneous", "Suppositories", "Syringes", "Vial fill"]},
-                               "Producer":{"q22":["Alkaloids", "Amino Acids", "Antioxidants", "Bags and tubes", "Binders", "Bio-catalysts", "Catalysts", "Cellulose", "Chirals", "Cosmesceuticals", "Dyes", "Enzymes", "Finished product Generic", "Food Supplements", "Excipients", "GMP API", "GMP biologics", "GMP intermediates", "Hormones", "Highly potent molecules", "Injectibles", "Lab equipement", "Lactose", "Lignosulphonates", "Lubricants", "Machinery", "Neutraceuticals", "Peptides", "Phospholides", "Pigments", "Plastics", "Probiotics", "Raw materials", "Sachet", "Solvents", "Stabilising agents", "Surfactants", "Vitamins"]},
-                               "Advisory services":{"q29":["Analytical", "API development", "Bio-manufacturing", "Controlled substances", "Counterfeiting", "Diagnostics", "Formulation development", "GCP", "GDP", "GMP", "GLP", "Manufacturing", "Medical devices", "Pack development", "Packaging", "Pharmacovigilance", "Quality", "Regulatory", "Transportation"]},
-                               "Market Access":{"q24":["Brand and Insight", "Consumer Health", "Patient Associations", "Public Health and Government", "Policy", "Real-World Value"]},
-                               "Academia":{"q32":["University Services", "Research", "Thought Leader"]}
-                              }
-                       };
 var questionGlobalList=[];
 var cons_key = '6cb8b57a-0a7e-4281-9e9d-61ba2165f95e';
 var token = 'c7f8bac5-0890-4094-8efe-348e54efffdd';
@@ -146,7 +135,6 @@ function setChoicesForCategory(elem) {
   }
 }
 
-// search_conditions = {'q2search':[{'id':'q12','result':q12},{'id':'q27','result':q27},{'id':'q16','result':q16}],'location':'zip'};
 function searchOnClick(){
   if(window.myInterval!=undefined&&window.myInterval!='undefined'){
     window.clearInterval(window.myInterval);
@@ -155,7 +143,7 @@ function searchOnClick(){
     x$('#searchResults').children().remove();
   }
   results=null;
-  //loaderActions('add'); - temporary
+  loaderActions('add');
   search_conditions={};
   var q2searchArray=[];
   for(var i=0;i<x$('.advancedSearchQuestion').length; i++){    

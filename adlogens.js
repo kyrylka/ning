@@ -54,7 +54,11 @@ function questionToHtml(question, dependencies){
           var ifInDependecies ="";
           var idQ = 'q'+question.index;
           if(typeof dependencies!="undefined" && dependencies.hasOwnProperty(idQ)===true){
-            resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><select class="advansedSearchSelect" id="q'+question.index+'" onchange="setChoicesForCategory(this)"><option selected="selected" value="Not specified">-</option>';
+            var ifDependencies='onchange="setChoicesForCategory(this)';
+            if(dependencies[idQ]==="none"){
+              ifDependencies="";
+            }
+            resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><select class="advansedSearchSelect" id="q'+question.index+'" '+ifDependencies+'"><option selected="selected" value="Not specified">-</option>';
             for(var j=0; j<question.choices.length; j++){
               resultHtml+='<option value="'+question.choices[j]+'">'+question.choices[j]+'</option>';
             }

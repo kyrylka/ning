@@ -44,7 +44,7 @@ function getProfileQuestions(blackList, dependencies){
   }
 }
 function questionToHtml(question, dependencies){
-  var helpText="Strict Mode - if activated, would force the search to return member's profiles which has picked up all the choises ticked by you in search preferences. If deactivated, if at least one of the choices under the profile satisfis your search request, you will see in the results. Note: Each question with multiple answers has separated trigger";
+  var helpText="Strict search - if activated (orange), only members with all choices selected will appear. If not activated (blue), members with at least one selected choices will be listed.";
         var resultHtml;
         if(question.type==="text" || question.type==="url"){
           resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><input class="advancedSeacrhInput" value="" id="q'+question.index+'" type="text"></input>';

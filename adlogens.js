@@ -51,7 +51,7 @@ function questionToHtml(question, dependencies){
           resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><input class="advancedSeacrhInput" value="" id="q'+question.index+'" type="text"></input>';
           //tag related changes
           if(question.index === 33){
-            resultHtml+='<div class="strictTriger" onclick="strictTriger(this)">&nbsp;</div><input type="hidden" value="true"></input><div class="multyHelp"><div onmouseover="showHelpMsg(this)" onmouseout="hideHelpMsg(this)">?</div><div class="multyHelpInfo" style="display:none">'+helpText2+'</div></div><style>label[name="q'+question.index+'"]:after{font-weight:normal; font-size: 12px; display: block; content:"*Please separate tags with one of the following: comma(,), period(.) or semicolon(;)"}</style>';            
+            resultHtml+='<div class="strictTriger" onclick="strictTriger(this)">&nbsp;</div><input type="hidden" value="true"></input><div class="multyHelp"><div onmouseover="showHelpMsg(this)" onmouseout="hideHelpMsg(this)">?</div><div class="multyHelpInfo" style="display:none">'+helpText2+'</div></div><style>label[for="q'+question.index+'"]:after{font-weight:normal; font-size: 12px; display: block; content:"*Please separate tags with one of the following: comma(,), period(.) or semicolon(;)"}</style>';            
           }
         }else if(question.type==="textarea"){
           resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><textarea class="advancedSeacrhTextarea" value="" id="q'+question.index+'" rows="3"></textarea>';
@@ -183,7 +183,9 @@ function searchOnClick(){
         }                
         if(elem.find('input[type="text"]').attr('id')==='q33'){
           res=res.split(/[.,;]/);
-          console.log('res');
+          for(var i=0; i<res.length; i++){
+            res[i]=res[i].trim();
+          }
           multyLoc = textToBool(elem.find('input[type="hidden"]').val());
         }
         q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": multyLoc});

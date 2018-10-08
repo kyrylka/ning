@@ -243,7 +243,7 @@ if(resLocal[i].hasOwnProperty('location')===false){
 }else{
   locaLoc = resLocal[i].location;
 }
-x$('#searchResults').append('<div class="searchResult"><div class="media-frame matrix-item"><a class="media-img avatar-frame" href="https://adlogens.ning.com/xn/detail/'+resLocal[i].id+'"><span class="wrap__avatar avatar avatar-90"><img class="photo avatar avatar-90" src="'+photo+'"></span></a><div class="media-body membersListPage-userInfo"><p class="membersListPage-userName"><a href="https://adlogens.ning.com/xn/detail/'+resLocal[i].id+'">'+resLocal[i].fullName+'</a></p><p class="membersListPage-userFeaturedAnswer">'+locaLoc+'</p></div></div></div>');
+x$('#searchResults').append('<div class="searchResult"><div class="media-frame matrix-item"><a class="media-img avatar-frame" href="https://nucleardirect.ning.com/xn/detail/'+resLocal[i].id+'"><span class="wrap__avatar avatar avatar-90"><img class="photo avatar avatar-90" src="'+photo+'"></span></a><div class="media-body membersListPage-userInfo"><p class="membersListPage-userName"><a href="https://nucleardirect.ning.com/xn/detail/'+resLocal[i].id+'">'+resLocal[i].fullName+'</a></p><p class="membersListPage-userFeaturedAnswer">'+locaLoc+'</p></div></div></div>');
 }
 function start() {
 var request = new XMLHttpRequest();
@@ -344,7 +344,7 @@ var questionGlobalList=[];
 /*replaces loader with search form*/
 function getProfileQuestions(blackList, dependencies){
   var catRequest = new XMLHttpRequest();
-  catRequest.open("GET","https://external.ningapis.com/xn/rest/adlogens/2.0/Network?xn_pretty=true&ID=7056184&fields=profileQuestions");
+  catRequest.open("GET","https://external.ningapis.com/xn/rest/nucleardirect/2.0/Network?xn_pretty=true&ID=7056184&fields=profileQuestions");
   catRequest.setRequestHeader('Authorization','OAuth oauth_signature_method="PLAINTEXT",oauth_consumer_key="'+cons_key+'",oauth_token="'+token+'",oauth_signature="'+signature+'"');
   catRequest.send();
   catRequest.onreadystatechange = function(){

@@ -466,6 +466,6 @@ function appendResLoc(resLocal, i){
       photo='https://storage.ning.com/topology/rest/1.0/file/get/126716692?profile=RESIZE_710x';
     }
   }  
-  x$('#searchResults').append('<div class="matrix-item matrix-sheet"><a href="'+resLocal.url+'" class="matrix-media-1-1 " style="display:block;background-image:url('+photo+');"><div class="groupHub-groupTitleContainer"><div class="groupHub-groupTitle"><span data-ux="name-group-inlist">'+resLocal[i].title+'</span></div></div></a></div>');
+  x$('#searchResults').append('<div class="searchResult"><div class="matrix-item matrix-sheet"><a href="'+resLocal.url+'" class="matrix-media-1-1 " style="display:block;background-image:url('+photo+');"><div class="groupHub-groupTitleContainer"><div class="groupHub-groupTitle"><span data-ux="name-group-inlist">'+resLocal[i].title+'</span></div></div></a></div></div>');
 }
 

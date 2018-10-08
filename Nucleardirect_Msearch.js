@@ -488,7 +488,7 @@ function searchOnClick(){
     if(elem.find('#countryContainer').length!=0){
       var country = x$('#country').val();
       var city = x$('#location').val();
-      if(country!="" || country!="_2"){
+      if(country!="" && country!="_2"){
         q2searchArray.push({'id':'country', 'result': country, 'multy': 'what_ever'});
       }
       if(city!=""){

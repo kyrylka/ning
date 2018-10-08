@@ -182,7 +182,7 @@ function searchOnClick(){
           res="Not specified";
           multyLoc = "what_ever";
         }                
-        if(elem.find('input[type="text"]').attr('id')===33){
+        if(elem.find('input[type="text"]').attr('id')==='q33'){
           res=res.split(/[.,;]/);          
         }
         q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": multyLoc});

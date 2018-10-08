@@ -32,7 +32,7 @@ function getProfileQuestions(blackList, dependencies){
           formToPost+= questionToHtml(questionList[i], dependencies) + '</div>';
         }
       }
-      formToPost = '<div class="advancedSearchContainer"><div class="questionsPull">'+formToPost+'<div id="searchButton" style="" onclick="searchOnClick()">Search</div><div id="searchResults">&nbsp;</div></div></div>';
+      formToPost = '<div class="advancedSearchContainer"><div class="questionsPull">'+formToPost+'<div id="searchButton" style="" onclick="searchOnClick()">Search</div><div id="clearButton" onclick="clearInputs()">Reset</div><div id="searchResults">&nbsp;</div></div></div>';
       if(typeof x$==="undefined"){
         document.addEventListener("DOMContentLoaded", function(){
           x$(".advancedLoader").replaceWith(formToPost);
@@ -41,6 +41,26 @@ function getProfileQuestions(blackList, dependencies){
         x$(".advancedLoader").replaceWith(formToPost);
       }
     }
+  }
+}
+function clearInputs(){
+  if(x$('.advancedSearchContainer').find('input[type="checkbox"]').length!=0){
+    x$('.advancedSearchContainer').find('input[type="checkbox"]').each(function(){
+      this.checked=false;
+    });
+  }
+  if(x$('.advancedSearchContainer').find('input[type="text"]').length!=0){
+    x$('.advancedSearchContainer').find('input[type="text"]').each(function(){
+      x$(this).val('');
+    });
+  }
+  if(x$('.advancedSearchContainer').find('select').length!=0){
+    x$('.advancedSearchContainer').find('select').each(function(){
+      x$(this).val('Not specified');
+    });
+  }
+  if(x$('.dependecyContainer').children().length!=0){
+    x$('.dependecyContainer').children().remove();
   }
 }
 function questionToHtml(question, dependencies){

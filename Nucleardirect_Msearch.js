@@ -230,12 +230,12 @@ function loaderActions(str){
 function appendResLoc(resLocal, i){
 var photo, locaLoc;
 if(resLocal[i].hasOwnProperty('photo')===false){
-  photo='https://storage.ning.com/topology/rest/1.0/file/get/87266458?profile=original&width=180&height=180&crop=1%3A1';
+  photo='https://static.ning.com/nucleardirect/widgets/profiles/gfx/defaults/profile-dark.png';
 }else{
   if (resLocal[i].photo != null){
     photo = resLocal[i].photo;
   }else{
-    photo='https://storage.ning.com/topology/rest/1.0/file/get/87266458?profile=original&width=180&height=180&crop=1%3A1';
+    photo='https://static.ning.com/nucleardirect/widgets/profiles/gfx/defaults/profile-dark.png';
   }
 }
 if(resLocal[i].hasOwnProperty('location')===false){

@@ -33,7 +33,7 @@ function searchResObtain(respons, request){
           /* первое срабатывание*/
           first_iter = JSON.parse(respons); // парсим в объекты первые результаты
           res_main = JSON.parse(respons);
-          var obj = searchConverter(res_main);
+          var obj = searchConverter(res_main.entry);
           res_main = JSON.stringify(obj);
           addResultsToResults();
           console.log('Search is ready to be executed for the first items obtained');

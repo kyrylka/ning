@@ -134,25 +134,25 @@ function searchConverter(entryArray){
 
 /*Converts datat from description into JSON*/
 function htmlToJson(htmlText){  
-  var html = $.parseHTML(htmlText);
+  var html = x$.parseHTML(htmlText);
   var dataJson ={};
-  for(var i=0; i<$(html).find('.firstColumnItem').length; i++){
-    var name = $($(html).find('.firstColumnItem')[i]).find('.firstColumnItemTitle p').text();
-    var text = $($(html).find('.firstColumnItem')[i]).find('.firstColumnItmeText p').text();    
+  for(var i=0; i<x$(html).find('.firstColumnItem').length; i++){
+    var name = x$(x$(html).find('.firstColumnItem')[i]).find('.firstColumnItemTitle p').text();
+    var text = x$(x$(html).find('.firstColumnItem')[i]).find('.firstColumnItmeText p').text();    
     dataJson[name] = text;
   }
   dataJson["Client"] =[];
   dataJson["Project"] =[];
-  for(var i=0;i<$(html).find('.gridCompanyContainer').length; i++){
+  for(var i=0;i<x$(html).find('.gridCompanyContainer').length; i++){
     var type ="Client";
     if(i===1){
       type="Project"
     }    
-    for(var j=0; j<$($(html).find('.gridCompanyContainer')[i]).find('.gridCompanyElelment').length; j++){
-      var elemSelected = $($(html).find('.gridCompanyContainer')[i]).find('.gridCompanyElelment')[j];
-      var logoUrl = $(elemSelected).find('img').attr('src');
-      var itemName = $(elemSelected).find('h3').text();
-      var descr = $(elemSelected).find('p').text();
+    for(var j=0; j<x$(x$(html).find('.gridCompanyContainer')[i]).find('.gridCompanyElelment').length; j++){
+      var elemSelected = x$(x$(html).find('.gridCompanyContainer')[i]).find('.gridCompanyElelment')[j];
+      var logoUrl = x$(elemSelected).find('img').attr('src');
+      var itemName = x$(elemSelected).find('h3').text();
+      var descr = x$(elemSelected).find('p').text();
       dataJson[type].push({'logoUrl':logoUrl,'itemName':itemName,'descr':descr}); 
     }
   }
@@ -170,22 +170,22 @@ function generateSearchField(whiteList){
     }    
   }
   htmlToPost+='<div class="groupSearchBtn" onclick="groupOnClickSearch()">Search</div><div id="searchResults"></div></div>';
-  $('.advancedGroupSearchLoader').replaceWith(htmlToPost);
+  x$('.advancedGroupSearchLoader').replaceWith(htmlToPost);
 }
 /*function which gets info from search fields correct temp before deploy*/
 function groupOnClickSearch(){
   if(window.myInterval!=undefined&&window.myInterval!='undefined'){
     window.clearInterval(window.myInterval);
   }
-  if($('#searchResults').children().length!=0){
-    $('#searchResults').children().remove();
+  if(x$('#searchResults').children().length!=0){
+    x$('#searchResults').children().remove();
   }
   results=null;
   //loaderActions('add'); - temporary
   search_conditions={};
   var q2searchArray=[];
-  for(var i=0;i<$('.advancedGroupSearch').length; i++){    
-    var elem = $($('.advancedGroupSearch')[i]);
+  for(var i=0;i<x$('.advancedGroupSearch').length; i++){    
+    var elem = x$(x$('.advancedGroupSearch')[i]);
     if(elem.find('input[type="text"]').length!=0){
       console.log("text input search triggered");
       var res = elem.find('input[type="text"]').val();

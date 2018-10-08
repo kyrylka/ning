@@ -171,7 +171,7 @@ function groupOnClickSearch(){
     x$('#searchResults').children().remove();
   }
   results=null;
-  //loaderActions('add'); - temporary
+  loaderActions('add');
   search_conditions={};
   var q2searchArray=[];
   for(var i=0;i<x$('.advancedGroupSearch').length; i++){    
@@ -196,9 +196,7 @@ function groupOnClickSearch(){
   }
   search_conditions = {'q2search':q2searchArray,'location':'zip'};
   resPP_end=0;
-  console.log(JSON.stringify(search_conditions));
-  /*Temporary hidden for test purposes*//*
-  // надо проверить пустой ли результат если что то есть то рольнуть что надо
+  console.log(JSON.stringify(search_conditions)); 
   var checker=0;
   for(var loc_i=0; loc_i<search_conditions.q2search.length; loc_i++){
     if(search_conditions.q2search[loc_i].result==="Not specified"){
@@ -214,7 +212,7 @@ function groupOnClickSearch(){
         addResultsToFront();
       }
     }
-  } */ 
+  } 
 }
 
 /*dont change at any cost, accepts everything in string format*/

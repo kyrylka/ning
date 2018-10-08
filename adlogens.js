@@ -177,13 +177,14 @@ function searchOnClick(){
       if(elem.find('input[type="text"]').length!=0){
         console.log("text input search triggered");
         var res = elem.find('input[type="text"]').val();
-        var multyLoc = textToBool(elem.find('input[type="hidden"]').val());
+        var multyLoc = "what_ever";        
         if(res===""){
-          res="Not specified";
-          multyLoc = "what_ever";
+          res="Not specified";          
         }                
         if(elem.find('input[type="text"]').attr('id')==='q33'){
-          res=res.split(/[.,;]/);          
+          res=res.split(/[.,;]/);
+          console.log('res');
+          multyLoc = textToBool(elem.find('input[type="hidden"]').val());
         }
         q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": multyLoc});
       /*}else if(elem.find('select.advansedSearchSelect')){

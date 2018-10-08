@@ -45,9 +45,14 @@ function getProfileQuestions(blackList, dependencies){
 }
 function questionToHtml(question, dependencies){
   var helpText="Strict search - if activated (orange), only members with all choices selected will appear. If not activated (blue), members with at least one selected choices will be listed.";
+  var helpText2="Strict search - if activated (orange), only members with all tags mentioned will appear. If not activated (blue), members with at least one mentioned tag will be listed.";
         var resultHtml;
         if(question.type==="text" || question.type==="url"){
           resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><input class="advancedSeacrhInput" value="" id="q'+question.index+'" type="text"></input>';
+          //tag related changes
+          if(question.index === 33){
+            resultHtml+='<div class="strictTriger" onclick="strictTriger(this)">&nbsp;</div><input type="hidden" value="true"></input><div class="multyHelp"><div onmouseover="showHelpMsg(this)" onmouseout="hideHelpMsg(this)">?</div><div class="multyHelpInfo" style="display:none">'+helpText2+'</div></div><style>label[name="q'+question.index+'"]:after{font-weight:normal; font-size: 12px; display: block; content:"*Please separate tags with one of the following: comma(,), period(.) or semicolon(;)"}</style>';            
+          }
         }else if(question.type==="textarea"){
           resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><textarea class="advancedSeacrhTextarea" value="" id="q'+question.index+'" rows="3"></textarea>';
         }else if(question.type==="select"){          
@@ -172,10 +177,15 @@ function searchOnClick(){
       if(elem.find('input[type="text"]').length!=0){
         console.log("text input search triggered");
         var res = elem.find('input[type="text"]').val();
+        var multyLoc = textToBool(elem.find('input[type="hidden"]').val());
         if(res===""){
           res="Not specified";
+          multyLoc = "what_ever";
+        }                
+        if(elem.find('input[type="text"]').attr('id')===33){
+          res=res.split(/[.,;]/);          
         }
-        q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": "what_ever"});
+        q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": multyLoc});
       /*}else if(elem.find('select.advansedSearchSelect')){
         console.log("select input search triggered");
         console.log(elem[0]);

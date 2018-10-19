@@ -114,7 +114,7 @@ function searchConverter(entryArray){
       let obj = {"questionId": keysList[j] , "answer":{"answer":companySharedInfo[keysList[j]]}};
       entryArray[i]["profileQuestions"].push(obj);
     }
-    entryArray[i]["profileQuestions"].push({"Company name": entryArray[i].title});
+    entryArray[i]["profileQuestions"].push({"questionId":"Company name","answer":{"answer" : entryArray[i].title}});
   }
   console.log(entryArray);
   return entryArray;

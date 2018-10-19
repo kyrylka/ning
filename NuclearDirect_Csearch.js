@@ -182,7 +182,7 @@ function groupOnClickSearch(){
       }else{
         res=[res];
       }
-      q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": "true"});
+      q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": true});
       /*}else if(elem.find('select.advansedSearchSelect')){
         console.log("select input search triggered");
         console.log(elem[0]);

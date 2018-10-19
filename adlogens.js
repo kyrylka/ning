@@ -203,7 +203,7 @@ function searchOnClick(){
         }                
         if(elem.find('input[type="text"]').attr('id')==='q33'){
           res=res.split(/[.,;]/);
-          for(var i=0; i<res.length; i++){
+          for(var h=0; h<res.length; h++){
             res[i]=res[i].trim();
           }
           multyLoc = textToBool(elem.find('input[type="hidden"]').val());

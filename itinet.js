@@ -397,7 +397,7 @@ function getProfileQuestions(blackList, dependencies){
     }
   }
 }
-    function questionToHtml(question, dependencies){
+   function questionToHtml(question, dependencies){
   var helpText="You can enter several words or phrases to search or, just devide them with comma. Strict search - if activated (trigger is to the right), only members with all words/phrases selected will appear. If not activated (trigger os to the left), members with at least one entered word or frase will be listed. Note!: search is key case sensitive";
         var resultHtml;
         if(question.type==="location"){
@@ -423,14 +423,13 @@ function getProfileQuestions(blackList, dependencies){
             }
             resultHtml+='</select>';
           }else{
-            resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><div class="multyReply">';
+            resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><select class="advansedSearchSelect" id="q'+question.index+'" '+ifDependencies+'"><option selected="selected" value="Not specified">Any</option>';
             for(var j=0; j<question.choices.length; j++){
-              resultHtml+='<div class="elemOfMultyContainer"><input type="checkbox" id="q'+question.index+'c'+j+'" '+ifInDependecies+'></input><label for="q'+question.index+'c'+j+'">'+question.choices[j]+'</label></div>';
-            }
-            resultHtml+= "</div>";
+              resultHtml+='<option vlaue="' +question.choices[j]+'">'+question.choices[j]+'</option>';
+            }            
           }
           if(question.multiple === true){
-            resultHtml+='<div class="strictTriger" onclick="strictTriger(this)">&nbsp;</div><input type="hidden" value="true"></input><div class="multyHelp"><div onmouseover="showHelpMsg(this)" onmouseout="hideHelpMsg(this)">?</div><div class="multyHelpInfo" style="display:none">'+helpText+'</div></div>';
+            resultHtml+='<input type="hidden" value="false"></input>';
           }
         }else{
           resultHtml = '<p>Question "'+question.title+'" with id=id"'+question.index+'" is in unsupporte type< please modify your blackList JSON. Or modify "questionToHtml" function appropriately. Regularly this message shouln\'t be shown</p>';

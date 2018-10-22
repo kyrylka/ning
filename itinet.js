@@ -426,7 +426,8 @@ function getProfileQuestions(blackList, dependencies){
             resultHtml = '<label class="advansedSearchLabel" for="q'+question.index+'">'+question.title+'</label><select class="advansedSearchSelect" id="q'+question.index+'" '+ifDependencies+'"><option selected="selected" value="Not specified">Any</option>';
             for(var j=0; j<question.choices.length; j++){
               resultHtml+='<option vlaue="' +question.choices[j]+'">'+question.choices[j]+'</option>';
-            }            
+            }
+            resultHtml+='</select>';
           }
           if(question.multiple === true){
             resultHtml+='<input type="hidden" value="false"></input>';

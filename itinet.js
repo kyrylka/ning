@@ -482,88 +482,16 @@ function searchOnClick(){
   search_conditions={};
   var q2searchArray=[];
   var locationArr = [];
-  for(var i=0;i<x$('.advancedSearchQuestion').length; i++){    
-    var elem = x$(x$('.advancedSearchQuestion')[i]);
-    if(elem.find('#countryContainer').length!=0){
-      var country = x$('#country').val();
-      var city = x$('#location').val();
-      if(country!="" && country!="_2"){
-        q2searchArray.push({'id':'country', 'result': country, 'multy': 'what_ever'});
-      }
-      if(city!=""){
-        q2searchArray.push({'id':'location', 'result': city, 'multy': 'what_ever'});
-      }
-    }else{
-      if(elem.find('.questionAndDependency').length!=0){
-        console.log("cat search triggered");
-        var elemId = elem.find('select').attr('id');
-        q2searchArray.push({ 'id':elemId, 'result': elem.find('select').val(), 'multy':"what_ever"});
-        if(elem.find('input[type="checkbox"]').length!=0){
-          var dependencyArray=[];
-          for(var j=0; j<elem.find('input[type="checkbox"]').length; j++){
-            var checkBox = x$(elem.find('input[type="checkbox"]')[j]);
-            if(checkBox[0].checked===true){
-              var boxId=checkBox.attr('id');
-              dependencyArray.push(elem.find('label[for="'+boxId+'"]').text());
-            }
-          }
-          var multyLoc = textToBool(elem.find('input[type="hidden"]').val());
-          if(dependencyArray.length===0){
-            dependencyArray="Not specified";
-            multyLoc = "what_ever";
-          }
-          q2searchArray.push({'id': elem.find('.dependecyContainer > label').attr("for"), 'result':dependencyArray, 'multy': multyLoc});
-        }
-      }else{
-        if(elem.find('input[type="text"]').length!=0){
-          console.log("text input search triggered");
-          var res = elem.find('input[type="text"]').val();
-          var multyValue = "what_ever";
-          if(res===""){
-            res="Not specified";
-          }
-          if(elem.find('input[type="hidden"]').length!=0){
-            multyValue = textToBool(elem.find('input[type="hidden"]').val());
-            res=res.split(',');
-            for(var d=0; d<res.length; d++){
-              res[d]=res[d].trim();
-            }
-          }
-          q2searchArray.push({'id':elem.find('input[type="text"]').attr('id'), 'result': res, "multy": multyValue});
-      /*}else if(elem.find('select.advansedSearchSelect')){
-        console.log("select input search triggered");
-        console.log(elem[0]);
-        q2searchArray.push({'id':elem.find('select').attr('id'), 'result': elem.find('select').val(), "multy": "what_ever"});*/
-        }else if(elem.children('.multyReply').length!=0){
-          console.log("multy search triggered");
-          console.log("problem place");
-          var depArray=[];
-          for(var l=0; l<elem.find('input[type="checkbox"]').length; l++){
-            var checkBox = x$(elem.find('input[type="checkbox"]')[l]);
-            if(checkBox[0].checked===true){
-              var boxId=checkBox.attr('id');
-              depArray.push(elem.find('label[for="'+boxId+'"]').text());
-            }
-          }               
-          var multy = true;
-          if(depArray.length===0){
-            depArray="Not specified";
-            multy = "what_ever";
-          }
-          q2searchArray.push({'id': elem.children('label').attr("for"), 'result':depArray, 'multy': multy});
-        }else if(elem.find('textarea').length!=0){
-          console.log("textarea input search triggered");
-          var res = elem.find('textarea').val();
-          if(res===""){
-            res="Not specified";
-          }
-          q2searchArray.push({'id':elem.find('textarea').attr('id'), 'result': res, "multy": "what_ever"});
-        }else{
-          console.log("Oops. Something went wrong");
-        }      
-      }
-    }
+  var valToSearch=x$('#typeOfMember').val();
+  q2searchArray.push({'id':'q15','result':[valToSearch], 'multy':false});
+  if(x$('#fromLanguage').val()!="Not specified" && x$('#toLanguage').val()!="Not specified"){
+    valToSearch = x$('#fromLanguage').val()+' to '+x$('#toLanguage').val();
+  }else{
+    valToSearch = "Not specified";
   }
+  q2searchArray.push({'id':'q8','result':[valToSearch], 'multy':false});
+  valToSearch = x$('#q10').val();
+  q2searchArray.push({'id':'q10','result':[valToSearch], 'multy':false});
   search_conditions = {'q2search':q2searchArray,'location':locationArr};
   resPP_end=0;
   var checker=0;

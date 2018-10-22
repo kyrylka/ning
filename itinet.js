@@ -240,22 +240,32 @@ function loaderActions(str){
   }
 }
 function appendResLoc(resLocal, i){
-var photo, locaLoc;
-if(resLocal[i].hasOwnProperty('photo')===false){
-  photo='https://static.ning.com/iti-italian-network/widgets/profiles/gfx/defaults/profile-dark.png';
-}else{
-  if (resLocal[i].photo != null){
-    photo = resLocal[i].photo;
-  }else{
+  var photo, locaLoc, spec, htmlCode;
+  if(resLocal[i].hasOwnProperty('photo')===false){
     photo='https://static.ning.com/iti-italian-network/widgets/profiles/gfx/defaults/profile-dark.png';
+  }else{
+    if (resLocal[i].photo != null){
+      photo = resLocal[i].photo;
+    }else{
+      photo='https://static.ning.com/iti-italian-network/widgets/profiles/gfx/defaults/profile-dark.png';
+    }
   }
-}
-if(resLocal[i].hasOwnProperty('location')===false){
-  locaLoc = "";
-}else{
-  locaLoc = resLocal[i].location;
-}
-x$('#searchResults').append('<div class="searchResult"><div class="media-frame matrix-item"><a class="media-img avatar-frame" href="https://iti-italian-network.ning.com/xn/detail/'+resLocal[i].id+'"><span class="wrap__avatar avatar avatar-90"><img class="photo avatar avatar-90" src="'+photo+'"></span></a><div class="media-body membersListPage-userInfo"><p class="membersListPage-userName"><a href="https://iti-italian-network.ning.com/xn/detail/'+resLocal[i].id+'">'+resLocal[i].fullName+'</a></p><p class="membersListPage-userFeaturedAnswer">'+locaLoc+'</p></div></div></div>');
+  spec="Not specified";
+  htmlCode="";
+  for(var j=0; j<resLocal[i].profileQuestions.length; j++){
+    if(resLocal[i].profileQuestions[j].questionId==="q10"){
+      spec=resLocal[i].profileQuestions[j].answer.answer;
+    }
+    if(resLocal[i].profileQuestions[j].questionId==="q11"){
+      htmlCode ='<p class="membersListPage-userFeaturedAnswer"> Other specialisms:'+resLocal[i].profileQuestions[j].answer.answer+'</p>';
+    }
+  }
+  if(resLocal[i].hasOwnProperty('location')===false){
+    locaLoc = "";
+  }else{
+    locaLoc = resLocal[i].location;
+  }
+  x$('#searchResults').append('<div class="searchResult"><div class="media-frame matrix-item"><a class="media-img avatar-frame" href="https://iti-italian-network.ning.com/xn/detail/'+resLocal[i].id+'"><span class="wrap__avatar avatar avatar-90"><img class="photo avatar avatar-90" src="'+photo+'"></span></a><div class="media-body membersListPage-userInfo"><p class="membersListPage-userName"><a href="https://iti-italian-network.ning.com/xn/detail/'+resLocal[i].id+'">'+resLocal[i].fullName+'</a></p><p class="membersListPage-userFeaturedAnswer">'+locaLoc+'</p><p class="membersListPage-userFeaturedAnswer>Email: '+resLocal[i].email+'</p><p class="membersListPage-userFeaturedAnswer>Specialisms : '+spec+'</p>'+htmlCode+'</div></div></div>');
 }
 function start() {
 var request = new XMLHttpRequest();

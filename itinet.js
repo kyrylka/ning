@@ -484,14 +484,21 @@ function searchOnClick(){
   var q2searchArray=[];
   var locationArr = [];
   var valToSearch=x$('#typeOfMember').val();
-  q2searchArray.push({'id':'q15','result':[valToSearch], 'multy':false});
+  if(valToSearch!="Not specified"){
+    valToSearch=[valToSearch];
+  }
+  q2searchArray.push({'id':'q15','result':valToSearch, 'multy':false});
   if(x$('#fromLanguage').val()!="Not specified" && x$('#toLanguage').val()!="Not specified"){
     valToSearch = x$('#fromLanguage').val()+' to '+x$('#toLanguage').val();
   }else{
     valToSearch = "Not specified";
+    q2searchArray.push({'id':'q8','result':valToSearch, 'multy':false});
   }
   q2searchArray.push({'id':'q8','result':[valToSearch], 'multy':false});
   valToSearch = x$('#q10').val();
+  if(valToSearch!="Not specified"){
+    valToSearch=[valToSearch];
+  }
   q2searchArray.push({'id':'q10','result':[valToSearch], 'multy':false});
   search_conditions = {'q2search':q2searchArray,'location':locationArr};
   resPP_end=0;

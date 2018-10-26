@@ -261,8 +261,7 @@ function appendResLoc(resLocal, i){
       htmlCode ='<p class="membersListPage-userFeaturedAnswer"> Other specialisms:'+resLocal[i].profileQuestions[j].answer.answer+'</p>';
     }
   }
-  $('#searchResults').append('<div class="searchResult"><div class="media-frame matrix-item"><a class="media-img avatar-frame" href="https://iti-italian-network.ning.com/xn/detail/'+resLocal[i].id+'"><span class="wrap__avatar avatar avatar-90"><img class="photo
- avatar avatar-90" src="'+photo+'"></span></a><div class="media-body membersListPage-userInfo"><p class="membersListPage-userName"><a href="https://iti-italian-network.ning.com/xn/detail/'+resLocal[i].id+'">'+resLocal[i].fullName+'</a></p><p class="membersListPage-userFeaturedAnswer">Email: '+resLocal[i].email+'</p><p class="membersListPage-userFeaturedAnswer">Specialisms : '+spec+'</p>'+htmlCode+'</div></div></div>');
+  $('#searchResults').append('<div class="searchResult"><div class="media-frame matrix-item"><a class="media-img avatar-frame" href="https://iti-italian-network.ning.com/xn/detail/'+resLocal[i].id+'"><span class="wrap__avatar avatar avatar-90"><img class="photo avatar avatar-90" src="'+photo+'"></span></a><div class="media-body membersListPage-userInfo"><p class="membersListPage-userName"><a href="https://iti-italian-network.ning.com/xn/detail/'+resLocal[i].id+'">'+resLocal[i].fullName+'</a></p><p class="membersListPage-userFeaturedAnswer">Email: '+resLocal[i].email+'</p><p class="membersListPage-userFeaturedAnswer">Specialisms : '+spec+'</p>'+htmlCode+'</div></div></div>');
 }
 function start() {
 var request = new XMLHttpRequest();

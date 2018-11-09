@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function (){
+  if(window.matchMedia("(max-width: 768px)").matches){
+    mobMenu();
+  }
   window.addEventListener('resize', function(){
     if(window.matchMedia("(max-width: 768px)").matches){
       if(x$('.tabContainerSection-tabs.subnavline.menuCopy').length===0){

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function (){
       if(x$('.tabContainerSection-tabs.subnavline.menuCopy').length===0){
         mobMenu();
       }else{
-        x$(.tabContainerSection-tabs.subnavline.menuCopy).show();        
+        x$('.tabContainerSection-tabs.subnavline.menuCopy').show();        
         //x$(x$('.tabContainerSection-tabs.subnavline')[0]).css('display');
       }      
     }

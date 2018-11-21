@@ -504,7 +504,7 @@ function searchOnClick(){
   valToSearch = $('#q10').val();
   if(valToSearch!="Not specified"){
     if(valToSearch.indexOf("&")>0){
-      valToSearch.replace(/&/g,"&amp;");
+      valToSearch=valToSearch.replace(/&/g,"&amp;");
     }
     valToSearch=[valToSearch];
   }

@@ -496,11 +496,11 @@ function searchOnClick(){
   q2searchArray.push({'id':'q15','result':valToSearch, 'multy':false});
   if($('#fromLanguage').val()!="Not specified" && $('#toLanguage').val()!="Not specified"){
     valToSearch = $('#fromLanguage').val()+' to '+$('#toLanguage').val();
+    q2searchArray.push({'id':'q8','result':[valToSearch], 'multy':false});
   }else{
     valToSearch = "Not specified";
     q2searchArray.push({'id':'q8','result':valToSearch, 'multy':false});
-  }
-  q2searchArray.push({'id':'q8','result':[valToSearch], 'multy':false});
+  }  
   valToSearch = $('#q10').val();
   if(valToSearch!="Not specified"){
     valToSearch=[valToSearch];

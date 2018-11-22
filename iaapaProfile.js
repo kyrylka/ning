@@ -13,7 +13,7 @@ function init(){
             let par = x$(curGreenContainer).parent();
             par.find('.status-commentForm').hide();
             par.find('.activityFeed-comments').hide();
-            elem.replaceWith('<div class="activityComments" onclick="function(this){let par = x$(this).parent().parent();  par.find(\'.status-commentForm\').show(); par.find(\'.activityFeed-comments\').show(); par.find(\'.activityComments\').remove();}"><a href="'+elem.attr('href')+'"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></a></div>')
+            elem.replaceWith('<div class="activityComments" onclick="function(this){console.log(this);let par = x$(this).parent().parent();  par.find(\'.status-commentForm\').show(); par.find(\'.activityFeed-comments\').show(); par.find(\'.activityComments\').remove();}"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></div>')
         }else{
             x$(curGreenContainer).append('<div class="activityComments" onclick="btnClicked(this)"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></div>');
         }

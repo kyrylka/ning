@@ -10,7 +10,10 @@ function init(){
             elem.empty().append('<div class="activityComments"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></div>')
         }else if(x$(curGreenContainer).find('a.activityFeed-commentCount').length!=0){
             let elem = x$(curGreenContainer).find('a.activityFeed-commentCount');
-            elem.replaceWith('<div class="activityComments"><a href="'+elem.attr('href')+'"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></a></div>')
+            let par = x$(curGreenContainer).parent();
+            par.find('.status-commentForm').hide();
+            par.find('.activityFeed-comments').hide();
+            elem.replaceWith('<div class="activityComments" onclick="function(this){let par = x$(this).parent().parent();  par.find(\'.status-commentForm\').show(); par.find(\'.activityFeed-comments\').show(); par.find(\'.activityComments\').remove();}"><a href="'+elem.attr('href')+'"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></a></div>')
         }else{
             x$(curGreenContainer).append('<div class="activityComments" onclick="btnClicked(this)"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></div>');
         }

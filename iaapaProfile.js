@@ -8,6 +8,9 @@ function init(){
         if(x$(curGreenContainer).find('.activityFeed-commentFormDisplay').length!=0){
             let elem = x$(curGreenContainer).find('.activityFeed-commentFormDisplay');
             elem.empty().append('<div class="activityComments"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></div>')
+        }else if(x$(curGreenContainer).find('a.activityFeed-commentCount').length!=0){
+            let elem = x$(curGreenContainer).find('a.activityFeed-commentCount');
+            elem.replaceWith('<div class="activityComments"><a href="'+elem.attr('href')+'"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></a></div>')
         }else{
             x$(curGreenContainer).append('<div class="activityComments" onclick="btnClicked(this)"><span class="number"></span><img src="'+controlsList.comments+'"><span class="text">Comments</span></div>');
         }
